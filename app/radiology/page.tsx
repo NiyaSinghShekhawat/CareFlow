@@ -93,7 +93,7 @@ export default function RadiologyDashboard() {
         <div className="absolute bottom-[10%] right-[10%] w-[35%] h-[35%] bg-blue-900/10 rounded-full blur-[120px]"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
         
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">

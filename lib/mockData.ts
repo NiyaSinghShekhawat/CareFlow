@@ -1,6 +1,17 @@
-import { Order, Patient } from "@/types";
+// NOTE: This file is demo-only mock data and is currently not used in runtime code.
+// We intentionally keep its types local to avoid coupling to the live Firebase models.
 
-export const mockPatients: Patient[] = [
+type MockPatient = {
+  id: string;
+  name: string;
+  mrn: string;
+  age: number;
+  condition: string;
+  room: string;
+  created_at: string;
+};
+
+export const mockPatients: MockPatient[] = [
   {
     id: "p1",
     name: "John Doe",
@@ -30,7 +41,22 @@ export const mockPatients: Patient[] = [
   },
 ];
 
-export const mockOrders: Order[] = [
+type MockOrder = {
+  id: string;
+  patient_id: string;
+  patient_name: string;
+  patient_mrn: string;
+  department: string;
+  test_type: string;
+  priority: string;
+  status: string;
+  notes?: string;
+  ordered_by: string;
+  ordered_at: string;
+  updated_at: string;
+};
+
+export const mockOrders: MockOrder[] = [
   {
     id: "o1",
     patient_id: "p1",

@@ -10,6 +10,7 @@ export type PatientStatus =
   | "pharmacy_ordered"
   | "completed"
   | "critical"
+  | "Critical"
   | "follow_up";
 
 export type Priority = "normal" | "urgent" | "stat";
@@ -37,6 +38,8 @@ export interface Patient {
   pastMedications?: string; // Patient's medication history
   pastAllergies?: string;   // Patient's allergy history
   assignedDoctorId?: string; // ID of the doctor managing this patient
+  phoneNumber?: string;      // Patient's contact number for SMS alerts
+  email?: string;            // Patient's email address for discharge reports
   
   // Status tracking for specific stages
   consultancyStatus?: "pending" | "processing" | "completed";
@@ -48,9 +51,22 @@ export interface Patient {
 export interface Action {
   id: string;
   patientId: string;
+  patientName?: string;
   type: string;
-  status: string;
+  department?: Department;
+  description?: string;
+  priority?: ActionPriority;
+  status: ActionStatus;
+  createdBy?: string;
+  createdAt: Timestamp;
+  updatedAt?: Timestamp;
 }
+
+export type Department = "Lab" | "Radiology" | "Pharmacy" | "Doctor" | "Nurse";
+
+export type ActionPriority = "NORMAL" | "URGENT" | "STAT";
+
+export type ActionStatus = "Pending" | "In Progress" | "Processing" | "Ready" | "Completed";
 
 export type OrderStatus = "pending" | "processing" | "ready" | "completed";
 

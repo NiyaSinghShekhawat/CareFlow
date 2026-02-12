@@ -32,7 +32,7 @@ export default function NurseDashboard() {
   
   // Login State
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [nurseIdInput, setNurseIdInput] = useState("");
+  const [nurseIdInput, setNurseIdInput] = useState("NU-");
   const [loginError, setLoginError] = useState("");
   const [currentNurseId, setCurrentNurseId] = useState("");
   const [verifying, setVerifying] = useState(false);
@@ -83,10 +83,12 @@ export default function NurseDashboard() {
     waiting: "bg-slate-800 text-slate-400 border-slate-700",
     under_treatment: "bg-teal-900/30 text-teal-400 border-teal-500/30",
     lab_ordered: "bg-blue-900/30 text-blue-400 border-blue-500/30",
+    radiology_ordered: "bg-indigo-900/30 text-indigo-400 border-indigo-500/30",
     pharmacy_ordered: "bg-purple-900/30 text-purple-400 border-purple-500/30",
     referred: "bg-amber-900/30 text-amber-400 border-amber-500/30",
     completed: "bg-green-900/30 text-green-400 border-green-500/30",
     critical: "bg-red-900/30 text-red-500 border-red-500/50 animate-pulse",
+    Critical: "bg-red-900/30 text-red-500 border-red-500/50 animate-pulse",
     follow_up: "bg-pink-900/30 text-pink-400 border-pink-500/30"
   };
 
@@ -105,47 +107,58 @@ export default function NurseDashboard() {
           <div className="absolute bottom-[10%] left-[20%] w-[30%] h-[30%] bg-purple-900/10 rounded-full blur-[100px]"></div>
         </div>
 
-        <div className="w-full max-w-md bg-slate-900/50 backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-slate-800 relative z-10 text-center">
-          <div className="mb-8">
-            <div className="w-20 h-20 bg-gradient-to-tr from-rose-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-6 text-white shadow-lg shadow-rose-500/20 transform rotate-3 hover:rotate-6 transition-all">
-              <Heart size={40} />
+        <div className="w-full max-w-xl bg-slate-900/40 backdrop-blur-xl rounded-[2.5rem] shadow-2xl p-16 border border-slate-800/50 relative z-10 text-center">
+          <div className="mb-12">
+            <div className="w-24 h-24 bg-gradient-to-tr from-rose-500 to-purple-500 rounded-3xl flex items-center justify-center mx-auto mb-8 text-white shadow-2xl shadow-rose-500/20 transform rotate-3 hover:rotate-6 transition-all duration-500">
+              <Heart size={48} />
             </div>
-            <h1 className="text-3xl font-bold text-white tracking-tight">Nurse Portal</h1>
-            <p className="text-slate-400 mt-2">Patient Care & Monitoring Access</p>
+            <h1 className="text-4xl font-black text-white tracking-tight mb-4">Nurse Portal</h1>
+            <p className="text-lg text-slate-400 font-medium tracking-wide">Patient Care & Monitoring Access</p>
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-6">
-            <div>
-              <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 text-left">Nurse ID</label>
+          <form onSubmit={handleLogin} className="space-y-8">
+            <div className="space-y-3">
+              <label className="block text-xs font-black text-slate-500 uppercase tracking-[0.2em] text-left ml-1">Nurse ID</label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={20} />
                 <input 
                   type="text" 
                   placeholder="e.g. NU-0001"
-                  className="w-full pl-10 pr-4 py-3.5 rounded-xl bg-slate-950 border border-slate-800 text-white focus:border-rose-500 focus:ring-1 focus:ring-rose-500 transition-all uppercase font-mono tracking-wide placeholder:text-slate-700"
+                  className="w-full pl-6 pr-4 py-4.5 rounded-2xl bg-slate-950 border border-slate-800 text-white focus:border-rose-500 focus:ring-1 focus:ring-rose-500 transition-all uppercase font-mono tracking-widest placeholder:text-slate-700 text-lg shadow-inner"
                   value={nurseIdInput}
-                  onChange={(e) => setNurseIdInput(e.target.value)}
+                  onChange={(e) => {
+                    const val = e.target.value.toUpperCase();
+                    if (!val.startsWith("NU-")) {
+                      setNurseIdInput("NU-");
+                    } else {
+                      setNurseIdInput(val);
+                    }
+                  }}
                 />
               </div>
             </div>
 
             {loginError && (
-              <div className="p-3 bg-red-900/20 border border-red-500/30 text-red-400 text-sm rounded-lg flex items-center gap-2 animate-shake">
-                <AlertTriangle size={16} />
-                {loginError}
+              <div className="p-4 bg-red-900/20 border border-red-500/30 text-red-400 text-sm rounded-xl flex items-center gap-3 animate-shake">
+                <AlertTriangle size={20} />
+                <span className="font-semibold">{loginError}</span>
               </div>
             )}
 
             <button 
               type="submit" 
               disabled={verifying}
-              className="w-full bg-rose-600 hover:bg-rose-500 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-rose-900/20 hover:shadow-rose-500/20 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transform active:scale-[0.98]"
+              className="w-full bg-rose-600 hover:bg-rose-500 text-white font-black py-4.5 rounded-2xl transition-all duration-300 shadow-xl shadow-rose-900/20 hover:shadow-rose-500/30 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed transform active:scale-[0.98] text-lg tracking-wide group"
             >
-              {verifying ? "Verifying..." : "Access Dashboard"}
+              {verifying ? "Verifying..." : (
+                <>
+                  Access Dashboard
+                  <ArrowRightCircle size={20} className="group-hover:translate-x-1 transition-transform" />
+                </>
+              )}
             </button>
           </form> 
           
-          <div className="mt-8 pt-6 border-t border-slate-800 text-xs text-slate-500">
+          <div className="mt-12 pt-8 border-t border-slate-800 text-xs font-bold text-slate-600 tracking-[0.3em] uppercase">
             Authorized Personnel Only • v2.0.4
           </div>
         </div>
@@ -161,7 +174,7 @@ export default function NurseDashboard() {
         <div className="absolute bottom-[20%] right-[10%] w-[25%] h-[25%] bg-purple-900/10 rounded-full blur-[100px]"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
         
         {/* Header */}
         <div className="flex justify-between items-center mb-10">
@@ -185,7 +198,7 @@ export default function NurseDashboard() {
               System Live
             </div>
             <button 
-              onClick={() => { setIsLoggedIn(false); setNurseIdInput(""); }}
+              onClick={() => { setIsLoggedIn(false); setNurseIdInput("NU-"); }}
               className="text-xs font-bold text-slate-500 hover:text-white transition-colors bg-slate-900 hover:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-800"
             >
               Log Out

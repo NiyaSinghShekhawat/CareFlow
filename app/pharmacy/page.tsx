@@ -85,7 +85,7 @@ export default function PharmacyDashboard() {
         <div className="absolute bottom-[25%] right-[15%] w-[30%] h-[30%] bg-indigo-900/10 rounded-full blur-[100px]"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
         
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">

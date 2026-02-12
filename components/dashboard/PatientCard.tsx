@@ -1,13 +1,23 @@
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Patient, Action } from "@/types";
+import { Action } from "@/types";
 import { Badge } from "@/components/ui/badge";
 import { Activity, Clock, User, AlertCircle, Phone, Syringe } from "lucide-react";
 import { addAction } from "@/lib/db";
 import { useSoundAlert } from "@/hooks/useSoundAlert";
 
+type PatientCardPatient = {
+  id: string;
+  name: string;
+  mrn: string;
+  age: number;
+  roomNumber: string;
+  condition: string;
+  status: string;
+};
+
 interface PatientCardProps {
-  patient: Patient;
+  patient: PatientCardPatient;
   activeActions?: Action[];
 }
 

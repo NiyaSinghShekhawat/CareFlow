@@ -7,7 +7,6 @@ import {
   Timestamp, 
   query, 
   where, 
-  orderBy, 
   onSnapshot 
 } from "firebase/firestore";
 import { db } from "./firebase";
@@ -62,8 +61,7 @@ export const updateActionStatus = async (actionId: string, newStatus: ActionStat
 export const subscribeToDepartmentActions = (department: Department, callback: (actions: Action[]) => void) => {
   const q = query(
     collection(db, "actions"),
-    where("department", "==", department),
-    orderBy("createdAt", "desc")
+    where("department", "==", department)
   );
 
   return onSnapshot(q, (snapshot) => {
@@ -71,6 +69,10 @@ export const subscribeToDepartmentActions = (department: Department, callback: (
       id: doc.id,
       ...doc.data()
     } as Action));
+    
+    // Client-side sort as temporary fix for missing index
+    actions.sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis());
+    
     callback(actions);
   });
 };
@@ -78,8 +80,7 @@ export const subscribeToDepartmentActions = (department: Department, callback: (
 export const subscribeToPatientActions = (patientId: string, callback: (actions: Action[]) => void) => {
   const q = query(
     collection(db, "actions"),
-    where("patientId", "==", patientId),
-    orderBy("createdAt", "desc")
+    where("patientId", "==", patientId)
   );
 
   return onSnapshot(q, (snapshot) => {
@@ -87,6 +88,10 @@ export const subscribeToPatientActions = (patientId: string, callback: (actions:
       id: doc.id,
       ...doc.data()
     } as Action));
+    
+    // Client-side sort as temporary fix for missing index
+    actions.sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis());
+    
     callback(actions);
   });
 };
