@@ -2,6 +2,8 @@
 
 **CareFlow** is a next-generation, real-time clinical workflow coordination system designed for modern emergency departments and hospital settings. It provides a unified command center for doctors, nurses, and clinical departments to collaborate seamlessly through a role-based dashboard ecosystem.
 
+*Deployed at:** https://care-flow-lilac.vercel.app/
+
 ## 🚀 Key Features
 
 - **Unified Command Center**: Specialized dashboards for Doctors, Nurses, Labs, Radiology, and Pharmacy.
